@@ -24,6 +24,22 @@ class SavingDay {
     );
   }
 
+  SavingDay addActual(double amount) {
+    return copyWith(actualAmount: (actualAmount + amount).clamp(0.0, double.infinity));
+  }
+
+  SavingDay subtractActual(double amount) {
+    return copyWith(actualAmount: (actualAmount - amount).clamp(0.0, double.infinity));
+  }
+
+  SavingDay addProjected(double amount) {
+    return copyWith(projectedAmount: (projectedAmount + amount).clamp(0.0, double.infinity));
+  }
+
+  SavingDay subtractProjected(double amount) {
+    return copyWith(projectedAmount: (projectedAmount - amount).clamp(0.0, double.infinity));
+  }
+
   SavingDay copyWith({
     String? id,
     DateTime? date,

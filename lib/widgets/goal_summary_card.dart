@@ -30,75 +30,49 @@ class GoalSummaryCard extends StatelessWidget {
     final potentialPercentText = (potentialPercent * 100).toStringAsFixed(1);
 
     final remainingActual = (target - totalActual).clamp(0.0, double.infinity);
-
     final isTargetReached = totalActual >= target;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF0F5132), // Dark emerald green
+            const Color(0xFF0F5132), // Dark emerald
             const Color(0xFF198754), // Forest green
-            const Color(0xFF0D6EFD).withValues(alpha: 0.9), // Ocean blue touch
+            const Color(0xFF0D6EFD).withValues(alpha: 0.85),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF198754).withValues(alpha: 0.3),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
+            color: const Color(0xFF198754).withValues(alpha: 0.25),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Header: Goal Title and Edit Button
+            // Dòng 1: Mục tiêu & Nút sửa
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(
-                        Icons.savings_rounded,
+                    const Icon(Icons.savings_rounded, color: Colors.white, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Mục tiêu: ${Formatters.formatCurrency(goal.targetAmount)}',
+                      style: const TextStyle(
                         color: Colors.white,
-                        size: 24,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          goal.title,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          Formatters.formatCurrency(goal.targetAmount),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -106,22 +80,18 @@ class GoalSummaryCard extends StatelessWidget {
                   onTap: onEditGoal,
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Row(
                       children: [
-                        Icon(Icons.edit, size: 14, color: Colors.white),
+                        Icon(Icons.edit, size: 12, color: Colors.white),
                         SizedBox(width: 4),
                         Text(
-                          'Đổi mục tiêu',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          'Đổi',
+                          style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -129,112 +99,93 @@ class GoalSummaryCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 10),
 
-            // 2 Summary Cards: TỔNG HIỆN TẠI & TỔNG DỰ KIẾN
+            // Dòng 2: 2 Ô TỔNG HIỆN TẠI & TỔNG DỰ KIẾN
             Row(
               children: [
-                // Ô 1: Tổng hiện tại (Đã tiết kiệm được)
+                // Ô 1: Tổng hiện tại (Đã có)
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.3),
-                      ),
+                      color: Colors.white.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
-                          children: [
-                            Icon(Icons.check_circle_rounded,
-                                size: 14, color: Color(0xFF69F0AE)),
-                            SizedBox(width: 4),
-                            Text(
-                              'Tổng Hiện Tại',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
+                        const Text(
+                          'ĐÃ TIẾT KIỆM',
+                          style: TextStyle(
+                            color: Color(0xFFB9F6CA),
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 2),
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
                             Formatters.formatCurrency(totalActual),
                             style: const TextStyle(
-                              color: Color(0xFFB9F6CA),
-                              fontSize: 18,
+                              color: Colors.white,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 2),
                         Text(
-                          'Đạt $actualPercentText% mục tiêu',
+                          'Đạt $actualPercentText%',
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.8),
-                            fontSize: 11,
+                            fontSize: 10,
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
-                // Ô 2: Tổng dự kiến (Đã có + Dự kiến có thêm)
+                const SizedBox(width: 8),
+
+                // Ô 2: Tổng dự kiến (Tiềm năng)
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.3),
-                      ),
+                      color: Colors.white.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
-                          children: [
-                            Icon(Icons.trending_up_rounded,
-                                size: 14, color: Color(0xFFFFD54F)),
-                            SizedBox(width: 4),
-                            Text(
-                              'Tổng Dự Kiến',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
+                        const Text(
+                          'TỔNG DỰ KIẾN',
+                          style: TextStyle(
+                            color: Color(0xFFFFE082),
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 2),
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
                             Formatters.formatCurrency(totalPotential),
                             style: const TextStyle(
-                              color: Color(0xFFFFE082),
-                              fontSize: 18,
+                              color: Colors.white,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 2),
                         Text(
-                          'Khả năng $potentialPercentText% mục tiêu',
+                          'Khả năng $potentialPercentText%',
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.8),
-                            fontSize: 11,
+                            fontSize: 10,
                           ),
                         ),
                       ],
@@ -243,103 +194,63 @@ class GoalSummaryCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 10),
 
-            // Progress Bar Visualizer
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Dòng 3: Thanh tiến trình gọn gàng
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Container(
+                height: 7,
+                color: Colors.black.withValues(alpha: 0.25),
+                child: Stack(
                   children: [
-                    Text(
-                      'Tiến trình tiết kiệm',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                    // Dự kiến (Amber)
+                    FractionallySizedBox(
+                      widthFactor: potentialPercent,
+                      child: Container(
+                        decoration: const BoxDecoration(color: Color(0xFFFFCA28)),
                       ),
                     ),
-                    Text(
-                      isTargetReached
-                          ? '🎉 Đã hoàn thành mục tiêu!'
-                          : 'Còn thiếu ${Formatters.formatCurrency(remainingActual)}',
-                      style: TextStyle(
-                        color: isTargetReached
-                            ? const Color(0xFF69F0AE)
-                            : Colors.white.withValues(alpha: 0.9),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                    // Thực tế (Bright Green)
+                    FractionallySizedBox(
+                      widthFactor: actualPercent,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF00E676), Color(0xFF69F0AE)],
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                // Custom layered progress bar
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    height: 10,
-                    width: double.infinity,
-                    color: Colors.black.withValues(alpha: 0.2),
-                    child: Stack(
-                      children: [
-                        // Background Projected bar (amber)
-                        FractionallySizedBox(
-                          widthFactor: potentialPercent,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFFFCA28),
-                            ),
-                          ),
-                        ),
-                        // Foreground Actual saved bar (bright green)
-                        FractionallySizedBox(
-                          widthFactor: actualPercent,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF00E676), Color(0xFF69F0AE)],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+              ),
+            ),
+            const SizedBox(height: 4),
+
+            // Dòng 4: Còn thiếu bao nhiêu
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  isTargetReached
+                      ? '🎉 Đã đạt mục tiêu!'
+                      : 'Còn thiếu: ${Formatters.formatCurrency(remainingActual)}',
+                  style: TextStyle(
+                    color: isTargetReached ? const Color(0xFF69F0AE) : Colors.white.withValues(alpha: 0.9),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 6),
-                // Legend
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF00E676),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    const Text(
-                      'Đã có',
-                      style: TextStyle(color: Colors.white70, fontSize: 10),
-                    ),
-                    const SizedBox(width: 12),
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFFFCA28),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    const Text(
-                      'Dự kiến thêm',
-                      style: TextStyle(color: Colors.white70, fontSize: 10),
-                    ),
+                    Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFF00E676), shape: BoxShape.circle)),
+                    const SizedBox(width: 3),
+                    const Text('Đã có', style: TextStyle(color: Colors.white70, fontSize: 9)),
+                    const SizedBox(width: 8),
+                    Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFFFFCA28), shape: BoxShape.circle)),
+                    const SizedBox(width: 3),
+                    const Text('Dự kiến', style: TextStyle(color: Colors.white70, fontSize: 9)),
                   ],
                 ),
               ],
